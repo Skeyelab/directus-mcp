@@ -1,0 +1,53 @@
+{
+  "name": "directus-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server for managing Directus schema and content",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "directus-mcp": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "directus",
+    "model-context-protocol",
+    "cms",
+    "headless-cms",
+    "api",
+    "schema-management"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/directus-mcp.git"
+  },
+  "homepage": "https://github.com/yourusername/directus-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/yourusername/directus-mcp/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "@directus/sdk": "^17.0.0",
+    "zod": "^3.23.8",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.0"
+  }
+}
+
