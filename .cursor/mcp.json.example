@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "directus-schema": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@skeyelab/directus-mcp-server"
+      ],
+      "env": {
+        "DIRECTUS_URL": "https://your-directus-instance.com",
+        "DIRECTUS_TOKEN": "your_token_here"
+      }
+    }
+  }
+}
+
