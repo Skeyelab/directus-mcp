@@ -235,7 +235,7 @@ describe('Flow Tools', () => {
         status: 'inactive' as const,
         name: 'Updated Flow Name',
       };
-      const mockResponse = { id: 'flow-1', ...updateData };
+      const mockResponse = { ...updateData };
       mockClient.updateFlow.mockResolvedValue(mockResponse);
 
       const tool = flowTools.find((t) => t.name === 'update_flow');
@@ -262,7 +262,7 @@ describe('Flow Tools', () => {
         options: { newOption: true },
         operation: 'new-operation-uuid',
       };
-      mockClient.updateFlow.mockResolvedValue({ id: 'flow-1', ...updateData });
+      mockClient.updateFlow.mockResolvedValue({ ...updateData });
 
       const tool = flowTools.find((t) => t.name === 'update_flow');
       await tool!.handler(mockClient as any, updateData);
