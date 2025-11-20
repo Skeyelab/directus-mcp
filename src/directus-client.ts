@@ -175,6 +175,70 @@ export class DirectusClient {
     }
   });
 
+  private dashboards = createResourceMethods('dashboards', {
+    supportsBulk: true,
+    specialMethods: {
+      list: (client: DirectusClient, params?: any) => {
+        const queryString = params ? client.buildQueryString(params) : '';
+        return client.request('GET', `/dashboards${queryString}`);
+      },
+      get: (client: DirectusClient, id: string, params?: any) => {
+        const queryString = params ? client.buildQueryString(params) : '';
+        return client.request('GET', `/dashboards/${id}${queryString}`);
+      },
+      create: (client: DirectusClient, data: any) => {
+        return client.request('POST', '/dashboards', data);
+      },
+      createDashboards: (client: DirectusClient, dashboards: any[]) => {
+        return client.request('POST', '/dashboards', dashboards);
+      },
+      update: (client: DirectusClient, id: string, data: any) => {
+        return client.request('PATCH', `/dashboards/${id}`, data);
+      },
+      updateDashboards: (client: DirectusClient, dashboards: any[]) => {
+        return client.request('PATCH', '/dashboards', dashboards);
+      },
+      delete: (client: DirectusClient, id: string) => {
+        return client.request('DELETE', `/dashboards/${id}`);
+      },
+      deleteDashboards: (client: DirectusClient, ids: string[]) => {
+        return client.request('DELETE', '/dashboards', ids);
+      }
+    }
+  });
+
+  private panels = createResourceMethods('panels', {
+    supportsBulk: true,
+    specialMethods: {
+      list: (client: DirectusClient, params?: any) => {
+        const queryString = params ? client.buildQueryString(params) : '';
+        return client.request('GET', `/panels${queryString}`);
+      },
+      get: (client: DirectusClient, id: string, params?: any) => {
+        const queryString = params ? client.buildQueryString(params) : '';
+        return client.request('GET', `/panels/${id}${queryString}`);
+      },
+      create: (client: DirectusClient, data: any) => {
+        return client.request('POST', '/panels', data);
+      },
+      createPanels: (client: DirectusClient, panels: any[]) => {
+        return client.request('POST', '/panels', panels);
+      },
+      update: (client: DirectusClient, id: string, data: any) => {
+        return client.request('PATCH', `/panels/${id}`, data);
+      },
+      updatePanels: (client: DirectusClient, panels: any[]) => {
+        return client.request('PATCH', '/panels', panels);
+      },
+      delete: (client: DirectusClient, id: string) => {
+        return client.request('DELETE', `/panels/${id}`);
+      },
+      deletePanels: (client: DirectusClient, ids: string[]) => {
+        return client.request('DELETE', '/panels', ids);
+      }
+    }
+  });
+
   constructor(config: DirectusConfig) {
     this.config = config;
     this.baseUrl = config.url.replace(/\/$/, ''); // Remove trailing slash
@@ -425,6 +489,72 @@ export class DirectusClient {
 
   async deleteOperations(ids: string[]): Promise<any> {
     return (this.operations as any).deleteOperations(this, ids);
+  }
+
+  // Dashboards
+  async listDashboards(params?: any): Promise<any> {
+    return (this.dashboards as any).list(this, params);
+  }
+
+  async getDashboard(id: string, params?: any): Promise<any> {
+    return (this.dashboards as any).get(this, id, params);
+  }
+
+  async createDashboard(data: any): Promise<any> {
+    return (this.dashboards as any).create(this, data);
+  }
+
+  async createDashboards(dashboards: any[]): Promise<any> {
+    return (this.dashboards as any).createDashboards(this, dashboards);
+  }
+
+  async updateDashboard(id: string, data: any): Promise<any> {
+    return (this.dashboards as any).update(this, id, data);
+  }
+
+  async updateDashboards(dashboards: any[]): Promise<any> {
+    return (this.dashboards as any).updateDashboards(this, dashboards);
+  }
+
+  async deleteDashboard(id: string): Promise<any> {
+    return (this.dashboards as any).delete(this, id);
+  }
+
+  async deleteDashboards(ids: string[]): Promise<any> {
+    return (this.dashboards as any).deleteDashboards(this, ids);
+  }
+
+  // Panels
+  async listPanels(params?: any): Promise<any> {
+    return (this.panels as any).list(this, params);
+  }
+
+  async getPanel(id: string, params?: any): Promise<any> {
+    return (this.panels as any).get(this, id, params);
+  }
+
+  async createPanel(data: any): Promise<any> {
+    return (this.panels as any).create(this, data);
+  }
+
+  async createPanels(panels: any[]): Promise<any> {
+    return (this.panels as any).createPanels(this, panels);
+  }
+
+  async updatePanel(id: string, data: any): Promise<any> {
+    return (this.panels as any).update(this, id, data);
+  }
+
+  async updatePanels(panels: any[]): Promise<any> {
+    return (this.panels as any).updatePanels(this, panels);
+  }
+
+  async deletePanel(id: string): Promise<any> {
+    return (this.panels as any).delete(this, id);
+  }
+
+  async deletePanels(ids: string[]): Promise<any> {
+    return (this.panels as any).deletePanels(this, ids);
   }
 
   public buildQueryString(params: any): string {
