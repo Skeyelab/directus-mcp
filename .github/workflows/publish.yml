@@ -5,31 +5,26 @@ on:
     tags:
       - 'v*'
 
+permissions:
+  id-token: write  # Required for OIDC
+  contents: write  # Required for creating GitHub releases
+
 jobs:
   publish:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      id-token: write
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22.19.0'
-          cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
-          scope: '@skeyelab'
-          always-auth: true
-          # OIDC authentication for trusted publishers
-          # Ensure trusted publisher is configured in npm with:
-          # - Repository: Skeyelab/directus-mcp-server
-          # - Workflow file: .github/workflows/publish.yml
+
+      - name: Update npm
+        run: npm install -g npm@latest
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -37,11 +32,11 @@ jobs:
       - name: Run linter
         run: yarn lint --quiet
 
-      - name: Run tests
-        run: yarn test
-
       - name: Build project
         run: yarn build
+
+      - name: Run tests
+        run: yarn test
 
       - name: Extract version from tag
         id: version
@@ -60,15 +55,8 @@ jobs:
           fi
           echo "Version verification passed: $PACKAGE_VERSION"
 
-      - name: Verify NPM authentication
-        run: |
-          echo "Verifying npm authentication..."
-          npm whoami --registry=https://registry.npmjs.org || (echo "Error: Authentication failed. Check trusted publisher configuration." && exit 1)
-
       - name: Publish to NPM
-        run: npm publish --access public --provenance
-        env:
-          NPM_CONFIG_PROVENANCE: true
+        run: npm publish --access public
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
