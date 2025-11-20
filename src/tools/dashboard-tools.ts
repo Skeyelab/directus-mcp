@@ -67,14 +67,14 @@ export const dashboardTools = [
     name: 'list_dashboards',
     description: 'List all dashboards that exist in Directus. Supports filtering, sorting, pagination, and search. Example: {filter: {"name": {"_contains": "sales"}}, sort: ["-date_created"], limit: 10}',
     inputSchema: ListDashboardsSchema,
-    toolsets: ['default', 'content'],
+    toolsets: ['dashboards'],
     handler: (client, args) => client.listDashboards(args),
   }),
   createTool({
     name: 'get_dashboard',
     description: 'Get a single dashboard by ID from Directus. Optionally specify fields to return and metadata options.',
     inputSchema: GetDashboardSchema,
-    toolsets: ['default', 'content'],
+    toolsets: ['dashboards'],
     handler: async (client, args) => {
       const { id, ...params } = args;
       return client.getDashboard(id, params);
@@ -84,21 +84,21 @@ export const dashboardTools = [
     name: 'create_dashboard',
     description: 'Create a new dashboard in Directus. Provide the dashboard data including name and optional configuration. Example: {name: "Sales Dashboard", icon: "analytics", color: "#FF5722", note: "Main sales metrics"}',
     inputSchema: CreateDashboardSchema,
-    toolsets: ['default', 'content'],
+    toolsets: ['dashboards'],
     handler: (client, args) => client.createDashboard(args),
   }),
   createTool({
     name: 'create_dashboards',
     description: 'Create multiple dashboards in Directus at once. More efficient than creating dashboards one by one. Example: {dashboards: [{name: "Dashboard 1", icon: "dashboard"}, {name: "Dashboard 2", icon: "analytics"}]}',
     inputSchema: CreateDashboardsSchema,
-    toolsets: ['default', 'content'],
+    toolsets: ['dashboards'],
     handler: async (client, args) => client.createDashboards(args.dashboards),
   }),
   createTool({
     name: 'update_dashboard',
     description: 'Update an existing dashboard in Directus. Provide the dashboard ID and fields to update. Example: {id: "dashboard-uuid", name: "Updated Dashboard Name", color: "#4CAF50"}',
     inputSchema: UpdateDashboardSchema,
-    toolsets: ['default', 'content'],
+    toolsets: ['dashboards'],
     handler: async (client, args) => {
       const { id, ...data } = args;
       return client.updateDashboard(id, data);
@@ -108,14 +108,14 @@ export const dashboardTools = [
     name: 'update_dashboards',
     description: 'Update multiple dashboards in Directus at once. Each dashboard must include an id field. Example: {dashboards: [{id: "uuid-1", name: "Updated Name 1"}, {id: "uuid-2", color: "#FF9800"}]}',
     inputSchema: UpdateDashboardsSchema,
-    toolsets: ['default', 'content'],
+    toolsets: ['dashboards'],
     handler: async (client, args) => client.updateDashboards(args.dashboards),
   }),
   createActionTool({
     name: 'delete_dashboard',
     description: 'Delete a dashboard from Directus by ID. This action cannot be undone.',
     inputSchema: DeleteDashboardSchema,
-    toolsets: ['default', 'content'],
+    toolsets: ['dashboards'],
     handler: async (client, args) => client.deleteDashboard(args.id),
     successMessage: (args) => `Dashboard ${args.id} deleted successfully`,
   }),
@@ -123,7 +123,7 @@ export const dashboardTools = [
     name: 'delete_dashboards',
     description: 'Delete multiple dashboards from Directus at once by their IDs. This action cannot be undone. Example: {ids: ["uuid-1", "uuid-2", "uuid-3"]}',
     inputSchema: DeleteDashboardsSchema,
-    toolsets: ['default', 'content'],
+    toolsets: ['dashboards'],
     handler: async (client, args) => client.deleteDashboards(args.ids),
     successMessage: (args) => `${args.ids.length} dashboards deleted successfully`,
   }),
