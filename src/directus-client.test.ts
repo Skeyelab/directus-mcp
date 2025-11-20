@@ -88,7 +88,7 @@ describe('DirectusClient', () => {
 
   describe('authenticate', () => {
     it('should authenticate with email/password', async () => {
-      const { createDirectus, rest, authentication } = await import('@directus/sdk');
+      const { authentication } = await import('@directus/sdk');
       const mockLogin = vi.fn().mockResolvedValue(undefined);
       vi.mocked(authentication).mockReturnValue({
         login: mockLogin,
