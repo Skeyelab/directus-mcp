@@ -5,6 +5,14 @@ export interface DirectusConfig {
   password?: string;
 }
 
+export interface DirectusTranslations {
+  [language: string]: {
+    translation?: string;
+    singular?: string;
+    plural?: string;
+  };
+}
+
 export interface DirectusCollection {
   collection: string;
   meta?: {
@@ -14,7 +22,7 @@ export interface DirectusCollection {
     display_template?: string;
     hidden: boolean;
     singleton: boolean;
-    translations?: any;
+    translations?: DirectusTranslations;
     archive_field?: string;
     archive_app_filter: boolean;
     archive_value?: string;
