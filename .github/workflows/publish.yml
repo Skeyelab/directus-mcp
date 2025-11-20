@@ -24,7 +24,12 @@ jobs:
           node-version: '22.19.0'
           cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
+          scope: '@skeyelab'
           always-auth: true
+          # OIDC authentication for trusted publishers
+          # Ensure trusted publisher is configured in npm with:
+          # - Repository: Skeyelab/directus-mcp
+          # - Workflow file: .github/workflows/publish.yml
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -55,8 +60,13 @@ jobs:
           fi
           echo "Version verification passed: $PACKAGE_VERSION"
 
+      - name: Verify NPM authentication
+        run: |
+          echo "Verifying npm authentication..."
+          npm whoami --registry=https://registry.npmjs.org || echo "Warning: Authentication check failed"
+
       - name: Publish to NPM
-        run: npm publish --access public
+        run: npm publish --access public --provenance
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1

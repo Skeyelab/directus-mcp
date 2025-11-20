@@ -9,14 +9,25 @@ This project uses GitHub Actions to automatically publish to NPM when version ta
 **Configure NPM Trusted Publisher** (Recommended - More Secure):
 
 1. Go to [npmjs.com](https://www.npmjs.com) and log in
-2. Navigate to your package: https://www.npmjs.com/package/@skeyelab/directus-mcp-server
-3. Go to Package Settings → Access → Automation → Trusted Publishers
-4. Click "Add Trusted Publisher"
-5. Select "GitHub Actions" as the publisher type
-6. Enter your GitHub repository: `Skeyelab/directus-mcp`
-7. Set the workflow file path: `.github/workflows/publish.yml`
-8. Set the environment name (leave empty for default)
-9. Click "Add"
+2. For scoped packages, you have two options:
+   
+   **Option A: Package-level (if package already exists)**
+   - Navigate to your package: https://www.npmjs.com/package/@skeyelab/directus-mcp-server
+   - Go to Package Settings → Access → Automation → Trusted Publishers
+   - Click "Add Trusted Publisher"
+   - Select "GitHub Actions" as the publisher type
+   - Enter your GitHub repository: `Skeyelab/directus-mcp`
+   - Set the workflow file path: `.github/workflows/publish.yml`
+   - Set the environment name (leave empty for default)
+   - Click "Add"
+   
+   **Option B: Organization-level (for new packages)**
+   - Go to your organization: https://www.npmjs.com/org/skeyelab
+   - Navigate to Settings → Automation → Trusted Publishers
+   - Add the trusted publisher with the same settings as above
+   - This allows the workflow to create new packages in the scope
+
+**Important**: If the package doesn't exist on npm yet, you may need to publish the first version manually (see "Manual Publishing" section below), or ensure the trusted publisher is configured at the organization level (Option B above).
 
 This uses OpenID Connect (OIDC) for authentication, which is more secure than storing tokens. No GitHub secrets are needed!
 
